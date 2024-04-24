@@ -4,11 +4,12 @@ from langchain.chains import LLMChain
 from langchain_core.prompts import PromptTemplate
 from langchain_community.llms import HuggingFaceEndpoint
 from dotenv import dotenv_values
+from flask_cors import CORS
 import os
 import re
 
 app = Flask(__name__)
-
+CORS(app)
 config = dotenv_values(".env")
 
 HUGGINGFACEHUB_API_TOKEN=config.get("HUGGINGFACEHUB_API_TOKEN")
