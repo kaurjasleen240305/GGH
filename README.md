@@ -12,7 +12,7 @@ You can install the required Python dependencies using `pip`:
 pip install flask langchain dotenv 
 ```
 
-Create file named ".env" in "server" folder in which you need to put access token from your Hugging Face ID
+Create file named `.env` in `server` folder in which you need to put access token from your Hugging Face ID
 
 Now open your terminal and run:-
 
