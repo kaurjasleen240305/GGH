@@ -2,7 +2,7 @@
 
 ## Procedure to start server
 
-Installation of Python3.<version> required
+Installation of Python3 required
 
 Make a clone of this github repository.
 
