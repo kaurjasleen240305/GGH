@@ -8,7 +8,7 @@ import os
 
 app = Flask(__name__)
 
-config = dotenv_values("../env2")
+config = dotenv_values(".env2")
 
 HUGGINGFACEHUB_API_TOKEN=config.get("HUGGINGFACEHUB_API_TOKEN")
 
