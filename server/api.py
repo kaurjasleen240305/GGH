@@ -21,7 +21,6 @@ def home():
     print("HOME ENTERED")
     return jsonify({'answer':"answer"})
 
-
 @app.route('/question', methods=['POST'])
 def ask_question():
     os.environ["HUGGINGFACEHUB_API_TOKEN"] = HUGGINGFACEHUB_API_TOKEN
@@ -45,6 +44,7 @@ def ask_question():
     match = re.search(pattern, answer, re.DOTALL)
     if match:
       first_question = match.group().strip()
+      print(first_question)
       return jsonify({'question': first_question})
     else:
       return jsonify({'question': "NO QUESTION FOUND"})
@@ -68,6 +68,27 @@ def ask_answer():
     print(llm_chain.run(question))
     answer=llm_chain.run(question)
     return jsonify({'answer': answer})
+
+@app.route('/performance', methods=['POST'])
+def ask_performance():
+    os.environ["HUGGINGFACEHUB_API_TOKEN"] = HUGGINGFACEHUB_API_TOKEN
+    question = request.args.get('question')
+    answer = request.args.get('answer')
+    repo_id = "mistralai/Mistral-7B-Instruct-v0.2"
+    question = f'What percentage of answer {answer} to the question {question} is correct?'
+    template = """Question: {question}
+
+    Answer: Let's think step by step."""
+    prompt = PromptTemplate.from_template(template)
+    repo_id = "mistralai/Mistral-7B-Instruct-v0.2"
+
+    llm = HuggingFaceEndpoint(
+      repo_id=repo_id, max_length=128, temperature=0.5, token=HUGGINGFACEHUB_API_TOKEN
+    )
+    llm_chain = LLMChain(prompt=prompt, llm=llm)
+    print(llm_chain.run(question))
+    answer=llm_chain.run(question)
+    return jsonify({'per': answer})
 
 if __name__ == '__main__':
     app.run(debug=True)
